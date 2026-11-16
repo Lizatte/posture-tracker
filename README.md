@@ -29,11 +29,17 @@ AI-powered desk posture monitor. A camera and Raspberry Pi Zero 2 W detect poor 
 \## Current Status
 
 Stage 1: webcam feed (in progress)
-Stage 2: MediaPipe body landmark detection (next)
-- **Stage 2 — MediaPipe body landmark detection: In progress.** Downloaded the Lite model; integrating detection into `webcam.py` is next.
+- **Stage 2 — MediaPipe body landmark detection: In progress.** The webcam displays green dots on detected body landmarks. Initial testing succeeded; tracking reliability still needs testing.
 
 \## Progress Log
 (Newest first)
+
+### November 16, 2026 — First Body Landmark Detection Test
+
+- **Did:** Integrated MediaPipe Pose Landmarker into `webcam.py` using the Lite model. Converted webcam frames from BGR to RGB, added increasing frame timestamps, and drew green dots on detected body landmarks.
+- **Problem:** Running `python webcam.py` produced `ModuleNotFoundError: No module named 'mediapipe'`, even though the terminal showed `(venv)`. The command was using the main Python installation instead of the project's virtual environment.
+- **Fix/Decision:** Installed the requirements, then ran `.\venv\Scripts\python.exe webcam.py` to explicitly use the project's Python. The webcam opened and displayed green body-landmark dots successfully.
+- **Next:** Test how reliably the landmarks follow movement and respond when the user moves out of view.
 
 ### November 16, 2026 — Stage 2 Model Setup
 

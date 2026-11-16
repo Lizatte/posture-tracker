@@ -1,71 +1,106 @@
-# Ergonomic Buddy
+\# Ergonomic Buddy
 
-Ergonomic Buddy is a desk posture monitor in development. The planned system will use a camera, MediaPipe body landmarks, and rule-based ergonomic thresholds to detect poor posture and alert the user with an LED and buzzer. Processing is intended to happen locally on the device.
 
-The hardware platform is still undecided. A Raspberry Pi Zero 2 W was considered, but no model has been selected. Development so far has used a laptop webcam and OpenCV.
 
-## Team
+AI-powered desk posture monitor. A camera and Raspberry Pi Zero 2 W detect poor posture using MediaPipe landmarks and rule-based ergonomic thresholds, and alert the user with an LED and buzzer. All processing happens on the device.
 
-- [Your name]
-- [Partner's name]
 
-## Setup
 
-Run these commands from the project folder. The activation command below is for Windows Command Prompt.
+\## Team
 
-1. Create a virtual environment:
-   ```cmd
-   python -m venv venv
-   ```
-2. Activate the virtual environment:
-   ```cmd
-   venv\Scripts\activate.bat
-   ```
-3. Install the required libraries:
-   ```cmd
-   pip install -r requirements.txt
-   ```
-4. Run the webcam program:
-   ```cmd
-   python webcam.py
-   ```
+\- \[Your name]
 
-Press **Q** while the webcam window is active to exit.
+\- \[Partner's name]
 
-## Current Status
 
-- **Stage 1 — Live webcam feed: Completed.** The laptop webcam feed displays continuously, supports quitting with Q, and releases the camera and closes the window when finished.
-- **Stage 2 — MediaPipe body landmark detection: Next.** Integrate MediaPipe to detect and display body landmarks in real time.
-- **Hardware selection: Undecided.**
 
-## Progress Log
+\## Setup
 
-Newest entries appear first. The November 16 notes are combined under one date because their recorded times conflict.
+1\. Create a virtual environment: `python -m venv venv`
 
-### November 16, 2026 — Stage 1 Completed
+2\. Activate it: `venv\\Scripts\\activate.bat`
 
-- **Did:** Created `webcam.py` using OpenCV. Opened the laptop webcam with `cv2.VideoCapture(0)` and used a `while True` loop to continuously capture and display live video. Added a keypress condition to exit the program.
-- **Problem:** The initial webcam window showed nothing. Needed to understand why `cap.read()` returns two values and why `cv2.waitKey()` is necessary for the webcam window to function properly.
-- **Fix/Decision:** Added `cv2.waitKey()` so the window could display and process events. Used `ret`, the success flag returned alongside the frame by `cap.read()`, to check whether each frame was captured successfully before displaying it. Used `cv2.waitKey(1)` to process window events and detect when Q is pressed. Added `cap.release()` and `cv2.destroyAllWindows()` to release the camera and close the window properly. Tested the program successfully, completing Stage 1.
-- **Next:** Stage 2 — integrate MediaPipe to detect and display body landmarks in real time.
+3\. Install libraries: `pip install -r requirements.txt`
 
-### October 18, 2026 — Project Setup
+4\. Run: `python webcam.py`
 
-- **Did:** Created the `posture-tracker` project folder, set up a virtual environment, installed OpenCV and MediaPipe, wrote `check.py` to confirm both libraries import, set up Git, and made the first commit (`b968bed`).
-- **Problem:** `check.py` initially ran with no output because the file was empty; the code had not been saved. Windows also saved `.gitignore` as `.gitignore.txt`, so Git did not recognize it as the ignore file.
-- **Fix/Decision:** Saved `check.py`, which then printed `OpenCV: 5.0.0` and `MediaPipe imported OK`. Renamed the ignore file in the terminal with `ren .gitignore.txt .gitignore`.
-- **Next:** Stage 1 — create a live webcam feed in `webcam.py`.
 
-## Hardware Parts Log
 
-Hardware selection is pending. Add selected parts and their order and arrival dates here as they are confirmed.
+\## Current Status
 
-## Test Results
+Stage 1: webcam feed (in progress)
+Stage 2: MediaPipe body landmark detection (next)
+- **Stage 2 — MediaPipe body landmark detection: In progress.** Downloaded the Lite model; integrating detection into `webcam.py` is next.
 
-The Stage 1 webcam program was tested successfully, as recorded in the progress log. Add posture-detection accuracy and latency measurements here when available.
+\## Progress Log
+(Newest first)
 
-## References
+### November 16, 2026 — Stage 2 Model Setup
 
-- MediaPipe documentation
-- OpenCV documentation
-- OSHA Computer Workstations eTool
+- **Did:** Downloaded `pose_landmarker_lite.task` into the project folder using `curl.exe`.
+- **Problem:** The installed MediaPipe version does not include the older `mp.solutions` interface.
+- **Fix/Decision:** Use the MediaPipe Pose Landmarker API with the downloaded Lite model. The download completed successfully (5.50 MB).
+- **Next:** Load the model in `webcam.py`, then detect and display body landmarks.
+
+### 11/16/2026, ~11:30 AM
+
+- **Did:** Created `webcam.py` using OpenCV. Wrote a `while True` loop to continuously capture and display live video from the laptop webcam. Added a keypress condition to exit the program.
+
+- **Problem:** Needed to understand why `cap.read()` returns two values and why `cv2.waitKey()` is necessary for the webcam window to function properly.
+
+- **Fix/Decision:** Used `ret` to check whether each frame was captured successfully before displaying it. Added `cv2.waitKey(1)` to process window events and detect when Q is pressed. Used `cap.release()` and `cv2.destroyAllWindows()` to close the camera and window properly. Tested the program successfully.
+
+- **Next:** Stage 2, integrate MediaPipe to detect and display body landmarks in real time.
+
+\### 10/18/2026, \~4:08 PM
+
+\- \*\*Did:\*\* Created the posture-tracker project folder, set up a virtual environment, installed OpenCV and MediaPipe, wrote check.py to confirm both import, set up Git, and made the first commit (b968bed).
+
+\- \*\*Problem:\*\* check.py ran with no output at first, because the file was empty (the code hadn't been saved). Windows also saved .gitignore as .gitignore.txt, so Git ignored it.
+
+\- \*\*Fix/Decision:\*\* Saved check.py, which then printed "OpenCV: 5.0.0" and "MediaPipe imported OK". Renamed the file with `ren .gitignore.txt .gitignore`.
+
+\- \*\*Next:\*\* Stage 1, live webcam feed (webcam.py).
+
+
+
+\### 11/16/2026, 3:30 PM
+
+\- \*\*Did:\*\* Started webcam.py. Opened the camera with cv2.VideoCapture(0).
+
+\- \*\*Problem:\*\* Window showed nothing.
+
+\- \*\*Fix/Decision:\*\* Needed cv2.waitKey() for the window to display.
+
+\- \*\*Next:\*\* Make the feed loop and quit on 'q'.
+
+
+
+\### 10/18/2026, 4:08 PM
+
+\- \*\*Did:\*\* Set up venv, installed OpenCV and MediaPipe, first Git commit.
+
+\- \*\*Problem:\*\* Windows saved .gitignore as .gitignore.txt.
+
+\- \*\*Fix/Decision:\*\* Renamed it in the terminal with `ren`.
+
+\- \*\*Next:\*\* Stage 1, webcam feed.
+
+
+
+\## Hardware Parts Log
+
+(Add dates when parts are ordered and arrive)
+
+
+
+\## Test Results
+
+(Add accuracy and latency numbers here later)
+
+
+
+\## References
+
+\- MediaPipe, OpenCV docs, OSHA Computer Workstations eTool
+

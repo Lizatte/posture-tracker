@@ -28,11 +28,18 @@ AI-powered desk posture monitor. A camera and Raspberry Pi Zero 2 W detect poor 
 
 \## Current Status
 
-Stage 1: webcam feed (in progress)
-- **Stage 2 — MediaPipe body landmark detection: In progress.** The webcam displays green dots on detected body landmarks. Initial testing succeeded; tracking reliability still needs testing.
+- **Stage 2 — MediaPipe body landmark detection: Completed.** Body landmarks display on the webcam feed and passed an initial visual tracking check.
+- **Stage 3 — Posture measurements and rules: Next.**
 
 \## Progress Log
 (Newest first)
+
+### November 18, 2026 — Initial Tracking Check Passed
+
+- **Did:** Visually tested landmark tracking while sitting upright, leaning forward and back, turning slightly, and leaving and returning to the camera view.
+- **Problem:** No obvious tracking problems observed during these checks.
+- **Fix/Decision:** Basic landmark detection and display are working. This was a visual check, not a measured accuracy test.
+- **Next:** Begin measuring posture using landmark positions and establish an upright reference position.
 
 ### November 16, 2026 — First Body Landmark Detection Test
 
